@@ -1,5 +1,5 @@
 {
-    "title": "My first Node.js application",
+    "title": "My first self-done work",
     "version": "1.0 ",
     "scripts": {
         "start": "node index.js"
