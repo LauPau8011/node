@@ -9,6 +9,7 @@ const port = 3000;// port (kanalo) skaicius
     res.send("Mano vardas yra Paula");//send metodas išsiunčia duomenis
 }); 
 
+
 app.get("/today", (req, res) => {
     res.send(new Date().toDateString());
 });
@@ -26,7 +27,7 @@ app.get("/user",(req, res) => {
 
 // serverio paleidimas
 app.listen(port, () => {
-    console.log(`Serveris listening on port ${port}`);
+    console.log(`Server is listening on port ${port}`);
 });
 
 
