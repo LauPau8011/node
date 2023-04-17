@@ -13,7 +13,7 @@ app.get("/randomUser", (req, res) => {
         country: `${casual.country}`,
         city: `${casual.city}`,
         street: `${casual.street}`,
-        zip: `${casual.zip(digits = [5, 9])}`
+        zip: `${casual.zip(5, 9)}`
     }
     res.send(randomUser)
 })
@@ -26,27 +26,34 @@ app.get("/randomColor", (req, res) => {
 })
 
 //c +
- app.get('/randomColors', (req, res) => {
+app.get('/randomColors', (req, res) => {
     const randomColors = `Color name:['${casual.color_name}', '${casual.color_name}', '${casual.color_name}', '${casual.color_name}', '${casual.color_name}']`;
     res.send(randomColors);
-}) 
-
-app.get("/randomColors", (req, res) => {
-    const colorArray = [];
-    for (let i = 0; i < 5; i++) {
-        colorArray[i] = casual.color_name;
-    }
-    res.send(colorArray)
 })
 
- 
+app.get("/randomColors", (req, res) => {
+
+    const colors = [];
+    for (let i = 0; i < 5; i++) {
+        colors.push(casual.color_name);
+    }
+    res.send(colors);
+});
+
+
 //d
 app.get('/randomPlaces', (req, res) => {
-    const placesArray = []
-    for (let i = 0; i < 5; i++) {
-        placesArray[i] = `[${casual.country}, ${casual.city}, ${casual.address}]`;
+    const places = [];
+    const numPlaces=Math.floor(Math.random()*5)+1
+    for (let i = 0; i < numPlaces; i++) {
+        const places={
+            country:casual.country,
+            city:casual.city,
+            address:`${casual.street} ${casual.address2}`
+        }
+        places.push(places)
     }
-    res.send(placesArray);
+    res.send(places);
 });
 
 
