@@ -21,16 +21,16 @@ const port = 3000;
 
 const products=["juice","bread"]
 
-app.get("/" ,(req, res) =>{
+app.get("/products" ,(req, res) =>{
     res.send(products)
 });
 
-app.post("/", (req, res) =>{
+app.post("/products", (req, res) =>{
     const product=req.body.product;
       products.push(product);
    res.send(req.body)
 }); 
 
 app.listen(port,()=>{
-    console.log(`Server is listen on the ${port}`)
+    console.log(`Server is running on the http://localhost:${port}`)
 });

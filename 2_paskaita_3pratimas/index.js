@@ -15,7 +15,6 @@ duomenys turėtų ne Vk pavadinimą, bet ir kainą. Pvz [{name: „arbuzas“, p
 1. PakoreguoV node serverį, kad prisitaikytų prie naujos struktūros
 2. PakoreguoV front endą: pridėV papildomą kainos įvedimo lauką ir pakoreguoV
 siunčiamą body */
-
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -25,26 +24,18 @@ app.use(cors());
 
 const port = 3000;
 
+const products = [];
 
-const products=[{name:"juice",price:10}]
-
-app.get("/" ,(req, res) =>{
-    res.send(products)
+app.get("/products", (req, res) => {
+  res.send(products);
 });
 
-
-app.post("/", (req, res) =>{
-    const product=req.body.product;
-         products.push(product);
-       res.send(req.body)
-}); 
-app.post("/", (req, res) =>{
-    const price=req.body.price;
-         prices.push(price);
-       res.send(req.body)
-}); 
-
-app.listen(port,()=>{
-    console.log(`Server is listen on the ${port}`)
+app.post("/products", (req, res) => {
+  const product = { name: req.body.name, price: req.body.price }; // sukuria objekta is siunciamo body
+  products.push(product);
+  res.send(product);
 });
 
+app.listen(port, () => {
+  console.log(`Server is running on the ${port}`);
+});
