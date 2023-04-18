@@ -26,10 +26,10 @@ app.get("/randomColor", (req, res) => {
 })
 
 //c +
-app.get('/randomColors', (req, res) => {
+/* app.get('/randomColors', (req, res) => {
     const randomColors = `Color name:['${casual.color_name}', '${casual.color_name}', '${casual.color_name}', '${casual.color_name}', '${casual.color_name}']`;
     res.send(randomColors);
-})
+}) */
 
 app.get("/randomColors", (req, res) => {
 
@@ -42,16 +42,16 @@ app.get("/randomColors", (req, res) => {
 
 
 //d
-app.get('/randomPlaces', (req, res) => {
+app.get("/randomPlaces", (req, res) => {
     const places = [];
     const numPlaces=Math.floor(Math.random()*5)+1
     for (let i = 0; i < numPlaces; i++) {
-        const places={
+        const place={
             country:casual.country,
             city:casual.city,
             address:`${casual.street} ${casual.address2}`
         }
-        places.push(places)
+        places.push(place)
     }
     res.send(places);
 });
