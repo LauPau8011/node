@@ -1,0 +1,12 @@
+{
+    "title": "4_paskaita_3pratimas",
+    "version": "1.0",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "export": "^0.1.337",
+        "express": "^4.18.2"
+    }
+}
