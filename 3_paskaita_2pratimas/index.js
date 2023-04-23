@@ -17,7 +17,6 @@ bū( alertas arba html textas), jei neranda vartotojo ives( į ekraną „Ne(nka
 paštas arba slaptažodis“
 o Tam reikės POST /login route kuris pa(krins ar vartotojas yra ir grąžins
 atsakymą*/
-
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -32,48 +31,29 @@ app.get("/users", (req, res) => {
 })
 
 app.post("/users", (req, res) => {
-    const user = { password: req.body.password,
-         password1: req.body.password1,
-         email: req.body.email,
-         name: req.body.name,
-         surname: req.body.surname,
-         adress: req.body.adress,
-         zip: req.body.zip,
-         city: req.body.city,
-         phone: req.body.phone,
-         agree: req.body.agree   
+    const user = { pas: req.body.pas, pass: req.body.pass,email: req.body.email,name: req.body.name,surname: req.body.surname,adress: req.body.adress,zip: req.body.zip,city: req.body.city,phone: req.body.phone,agree: req.body.agree   
     };
     users.push(user);
     res.send(user);
 });
 
 app.post("/login", (req, res) => {
-    // Patikrinti ar egzistuoja vartotojas
-  
-    res.send({ message: "" });
-    // req.body = {email: "rokas@gmail.com", password: "rokas123"}
-    //
-    let foundedUser = users.find((user) => user.email === req.body.email);
-    // jeigu randa foundedUser = {email: "rokas@gmail.com", password: "rokas123", ...}
-    // jeigu neranda foundedUser = undefined
-    if (foundedUser !== undefined) {
-      // rado
-      let submittedPassword = req.body.password; // test
-      let storedPassword = foundedUser.password; // test
-      // test === test
-      // rokas123 === rokas123!
-      if (submittedPassword === storedPassword) {
-        res.send({ message: "Sekmingai prisijungete", approved: true });
-      } else {
-        res.send({ message: "Neteisingas slaptažodis", approved: false });
-      }
-    } else {
-      // nerado
-      res.send({
-        message: "Neteisingas el. paštas",
-        approved: false,
-      });
-    }
-  });
-  
-  app.listen(port, () => console.log(`Server started on port ${port}...`));
+    const loginUser = { pas: req.body.pas, email: req.body.email };
+    let msg = "";
+    users.forEach((user) => {
+        if (loginUser.email === user.email) {
+            if (loginUser.pas === user.pas) {
+                return msg = "logged in successfully";
+            } else {
+                return msg = "Wrong password";
+            }
+        } else {
+            return msg = "This email NOT exist";
+        }
+    });
+    res.send({ message: msg });
+});
+
+app.listen(port, () => {
+    console.log(`Server is listening on port  ${port}`)
+})

@@ -1,29 +1,25 @@
-const form = document.querySelector("form");
-
-form.addEventListener("submit", (e) => {
+document.querySelector('#login').addEventListener('click', (e) => {
   e.preventDefault();
-  const password = document.querySelector("#password").value;
-  const email = document.querySelector("#email").value;
-  //POST
-  fetch("http://localhost:3000/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      password,
-      email,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      const output = document.querySelector("h2");
-
-      if (data.approved === false) {
-        output.style.color = "red";
+  const email = document.querySelector('#email').value;
+  const pas = document.querySelector('#pas').value;
+  let res = document.querySelector('#res');
+  res.textContent = "";
+  
+  fetch('http://localhost:3000/login', {
+      method: "POST",
+      headers: { 
+          "Content-Type": "application/json" 
+      },
+      body: JSON.stringify({ pas: pas, email: email }),
+  }).then(resp => resp.json())
+  .then(response => {
+      if (response.message == "logged in successfully") {
+          res.textContent = response.message;
+          setTimeout(() => {
+              window.open("index.html", "_blank")
+          }, 2000);
       } else {
-        output.style.color = "green";
+          res.textContent = response.message;
       }
-      output.textContent = data.message;
-    })
-    .catch((error) => console.log(error));
-  form.reset();
-});
+  })
+})
