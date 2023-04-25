@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 
 // 2. Sukurkite dinaminį GET route, kur URL turės prekės kategoriją, ir pagal ją prafiltruos,
 //bei grąžins tik tuos produktus, kurie priklauso šiai kategorijai.
-app.get("/item/:category", (req, res) => {
+app.get("/items/:category", (req, res) => {
   const category = req.params.category;
   const filteredItems = data.filter((item) => item.category.toLowerCase() === category.toLowerCase()
   );
@@ -50,7 +50,7 @@ app.get("/stock", (req, res) => {
   res.send(inStock);
 });
 
-
+/* 
 // 6  Sukurkite dinaminį GET route, kuris pagal kainos intervalą grąžins prekes, kurių kaina 
 // yra tarp nurodytų ribų (įskaitant jas). Parametrai turėtų būD perduodami URL kaip 
 // minPrice ir maxPrice. (du parametrai reikalingi)
@@ -93,7 +93,7 @@ app.post("/add", (req, res) => {
   data.push(item);
   res.send(data);
 })
-
+ */
 
 
 
