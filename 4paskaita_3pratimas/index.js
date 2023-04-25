@@ -13,7 +13,7 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send(data);
 });
-
+/* 
 // 2. Sukurkite dinaminį GET route, kur URL turės prekės kategoriją, ir pagal ją prafiltruos,
 //bei grąžins tik tuos produktus, kurie priklauso šiai kategorijai.
 app.get("/items/:category", (req, res) => {
@@ -21,7 +21,7 @@ app.get("/items/:category", (req, res) => {
   const filteredItems = data.filter((item) => item.category.toLowerCase() === category.toLowerCase()
   );
   res.send(filteredItems);
-});
+}); */
 
 // 3. Sukurkite dinaminį GET route, kuris priims prekės id ir pagal jį grąžins atitinkamą
 //prekės objektą. Hint: url parametrai visada stringai, o čia id - skaičius, tad reikės
@@ -50,24 +50,32 @@ app.get("/stock", (req, res) => {
   res.send(inStock);
 });
 
-/* 
+
 // 6  Sukurkite dinaminį GET route, kuris pagal kainos intervalą grąžins prekes, kurių kaina 
 // yra tarp nurodytų ribų (įskaitant jas). Parametrai turėtų būD perduodami URL kaip 
 // minPrice ir maxPrice. (du parametrai reikalingi)
 
-app.get("/price/:minPrice/:maxPrice", (req, res) => {
+/* app.get("/price/:minPrice/:maxPrice", (req, res) => {
   const minPrice = req.params.minPrice;
   const maxPrice = req.params.maxPrice;
   //console.log(Number(minPrice));
   const filteredMinPrice = data.filter((item) => item.price >= +minPrice);
   const filteredMinMaxPrice = filteredMinPrice.filter((item) => item.price <= +maxPrice);
   res.send(filteredMinMaxPrice);
+}); */
+app.get("/products/:minPrice/:maxPrice", (req, res) => {
+  const minPrice = Number(req.params.minPrice);
+  const maxPrice = Number(req.params.maxPrice);
+  const filteredProducts = data.filter(
+    (product) => product.price >= minPrice && product.price <= maxPrice
+  );
+  res.send(filteredProducts);
 });
 
 // 7 Sukurkite POST route, kuris leis pridėD naują prekę prie duomenų sąrašo. Nauja prekė 
 // turėtų turėD id, name, category, price ir stock laukus. UžDkrinkite, kad naujoji prekė 
 // neturėtų to paDes id kaip jau esančios prekės.
-
+/*
 app.get("/add", (req, res) => {
   res.send(data);
 });
@@ -82,7 +90,7 @@ app.post("/add", (req, res) => {
   const id = 
 
 
-
+/*
  const item = {
     "id": 8,
     "name": "iPhone 14",
