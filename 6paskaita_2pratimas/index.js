@@ -1,47 +1,41 @@
-const express = require("express");
-const cors = require("cors");
-const port = 3000;
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
+
+const port = process.env.PORT || 8080; // || 8080 - grįžtamasis ryšys jeigu PORT bus nerastas
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-const cart = [];
+const ticket = [];
 
-// 1
-app.get("/cart", (req, res) => {
-  res.send(cart);
+app.get('/ticket', (req, res) => {
+  res.send(ticket);
 });
 
-// 3
-app.get("/cart/:id", (req, res) => {
-  const item = cart.find((item) => item.id === +req.params.id);
-  if (!item) {
+app.get('/tickets/:id', (req, res) => {
+  const id = req.params.id;
+  const foundItem = ticket.find((reserv) => reserv.id === +id);
+  res.send(foundItem);
+});
+/* app.get('/tickets/:id', (req, res) => {
+  const reserv = ticket.find(() => reserv.id === +req.params.id);
+  if (!reserv) {
     // jeigu neranda - 404 status nerado resurso
-    res.status(404).send("Item not found");
+    res.status(404).send('Item not found');
   } else {
     // jeigu randa
-    res.send(item);
+    res.send(reserv);
   }
-});
-
+}); */
 // 2
-app.post("/cart", (req, res) => {
-  const item = req.body;
-  item.id = cart.length + 1; // pridedamas dinaminis id pagal krepšelio ilgį +1
-  cart.push(item);
+app.post('/ticket', (req, res) => {
+  const reserv = req.body;
+  reserv.id = ticket.length + 1; // pridedamas dinaminis id pagal krepšelio ilgį +1
+  ticket.push(reserv);
   // res.status() - grąžina http statusą, kuris nurodo response būseną
-  res.status(201).send(item);
-});
-
-app.delete("/cart/:id", (req, res) => {
-  const index = cart.findIndex((item) => item.id === parseInt(req.params.id));
-  if (index === -1) {
-    res.status(404).send("Item not found");
-  } else {
-    cart.splice(index, 1);
-    res.send("Item removed from cart");
-  }
+  res.status(201).send(reserv);
 });
 
 app.listen(port, () => console.log(`Server started on port ${port}...`));
