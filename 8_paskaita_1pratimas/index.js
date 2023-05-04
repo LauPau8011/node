@@ -33,7 +33,7 @@ app.post('/Restaurants', async (req, res) => {
     const con = await client.connect();
     const data = await con
       .db('ManoDuomenuBaze')
-      .collection('Restaurant')
+      .collection('Restaurants')
       .insertOne(restaurant);
     await con.close();
     res.send(data);
