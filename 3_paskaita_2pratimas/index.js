@@ -19,41 +19,58 @@ o Tam reikės POST /login route kuris pa(krins ar vartotojas yra ir grąžins
 atsakymą*/
 const express = require("express");
 const cors = require("cors");
-const app = express();
-app.use(cors());
-app.use(express.json());
 const port = 3000;
+
+const app = express();
+app.use(express.json());
+app.use(cors());
 
 const users = [];
 
 app.get("/users", (req, res) => {
-    res.send(users)
-})
+  res.send(users);
+});
 
 app.post("/users", (req, res) => {
-    const user = { pas: req.body.pas, pass: req.body.pass,email: req.body.email,name: req.body.name,surname: req.body.surname,adress: req.body.adress,zip: req.body.zip,city: req.body.city,phone: req.body.phone,agree: req.body.agree   
-    };
-    users.push(user);
-    res.send(user);
+  const user = {
+    password: req.body.password,
+    email: req.body.email,
+    firstname: req.body.firstname,
+    surname: req.body.surname,
+    address: req.body.address,
+    postcode: req.body.postcode,
+    city: req.body.city,
+    phone: req.body.phone,
+    isAgreemnet: req.body.isAgreemnet,
+  };
+  users.push(user);
+  res.send(users);
 });
 
 app.post("/login", (req, res) => {
-    const loginUser = { pas: req.body.pas, email: req.body.email };
-    let msg = "";
-    users.forEach((user) => {
-        if (loginUser.email === user.email) {
-            if (loginUser.pas === user.pas) {
-                return msg = "logged in successfully";
-            } else {
-                return msg = "Wrong password";
-            }
-        } else {
-            return msg = "This email NOT exist";
-        }
+  // req.body = {email: "rokas@gmail.com", password: "rokas123"}
+  //
+  let foundedUser = users.find((user) => user.email === req.body.email);
+  // jeigu randa foundedUser = {email: "rokas@gmail.com", password: "rokas123", ...}
+  // jeigu neranda foundedUser = undefined
+  if (foundedUser !== undefined) {
+    // rado
+    let submittedPassword = req.body.password; // test
+    let storedPassword = foundedUser.password; // test
+    // test === test
+    // rokas123 === rokas123!
+    if (submittedPassword === storedPassword) {
+      res.send({ message: "Sekmingai prisijungete", approved: true });
+    } else {
+      res.send({ message: "Neteisingas slaptažodis", approved: false });
+    }
+  } else {
+    // nerado
+    res.send({
+      message: "Neteisingas el. paštas",
+      approved: false,
     });
-    res.send({ message: msg });
+  }
 });
 
-app.listen(port, () => {
-    console.log(`Server is listening on port  ${port}`)
-})
+app.listen(port, () => console.log(`Server started on port ${port}...`));

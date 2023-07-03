@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const port = process.env.PORT || 8080;
 const URI = process.env.DB_CONNECTION_STRING;
-const dbName = process.env.ManoDuomenuBaze;
+const dbName = process.env.DB_NAME;
 
 const app = express();
 app.use(express.json());
@@ -66,7 +66,7 @@ app.get('/petsWithOwner', async (req, res) => {
   }
 });
 
-/* app.delete('/owners', async (req, res) => {
+app.delete('/owners', async (req, res) => {
   try {
     const con = await client.connect();
     const data = await con.db(dbName).collection('owners').deleteMany(); // ištrina visus
@@ -91,34 +91,11 @@ app.delete('/owners/:id', async (req, res) => {
     res.status(500).send(error);
   }
 });
- */
-app.get('/owners', async (req, res) => {
-  // prieš pridedant gyvūną, reikia pridėti jų savininkų kolekciją
-  try {
-    const con = await client.connect();
-    const data = await con.db(dbName).collection('owners').find().toArray();
 
-    await con.close();
-    res.send(data);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-app.get('/pets', async (req, res) => {
+app.post('/pets/:id', async (req, res) => {
   // prieš pridedant gyvūną, reikia pridėti jų savininkų kolekciją
   try {
-    const con = await client.connect();
-    const data = await con.db(dbName).collection('pets').find().toArray();
-
-    await con.close();
-    res.send(data);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-app.post('/pets', async (req, res) => {
-  // prieš pridedant gyvūną, reikia pridėti jų savininkų kolekciją
-  try {
+    const { id } = req.params;
     const con = await client.connect();
     const data = await con
       .db(dbName)
@@ -127,7 +104,7 @@ app.post('/pets', async (req, res) => {
         {
           type: 'cat',
           name: 'Murka',
-          ownerId: new ObjectId('645a7886c5e5702f9adb146f'), // išsitraukiam iš jau esamų ownerių
+          ownerId: new ObjectId(id), // pasiimam iš parametrų pvz. /pets/645a7886c5e5702f9adb1470
         },
       ]);
     await con.close();

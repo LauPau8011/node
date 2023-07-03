@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 const express = require("express");
 const cors = require("cors");
 const data = require("./data"); // importuojam duomenis
@@ -21,7 +14,7 @@ app.get("/", (req, res) => {
 
 // 2. Sukurkite dinaminį GET route, kur URL turės automobilio markę ir pagal ją prafiltruos, ir grąžins tik tuos žmones,
 // kurie turi šį automobilį.
-app.get("/cars/:model", (req, res) => {
+app.get("/cars/:model", (req, res) => { // localhost:3000/cars/Dodge
   const model = req.params.model;
   const filteredClients = data.filter((client) => client.car.toLowerCase() === model.toLowerCase()
   );

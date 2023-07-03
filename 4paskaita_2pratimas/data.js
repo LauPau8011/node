@@ -1,6 +1,6 @@
 //JSON.parse()-atvirkščiai nei JSON.stringify()-išparsina JSON duomenis į JavaScript duomenis
-//šiuo atveju JSON parverčiamas į Javascript  array su objektais
- const data = JSON.parse(`[{
+//šiuo atveju JSON parverčiamas į Javascript  array su objektais duomenys nukopijuoti iš duoto adreso.
+const data = JSON.parse(`[{
     "id": 1,
     "first_name": "Kelwin",
     "last_name": "Pirouet",
@@ -351,6 +351,6 @@
     "gender": "Genderqueer",
     "car": "Porsche"
   }]
-  `)
+  `);
 //ekportuojams data kintamąjš
-module.exports = data
+module.exports = data;

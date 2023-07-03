@@ -7,7 +7,7 @@ app.use(cors());
 
 const port = 3000;
 
-const names = ["Laura"];
+const names = ["Rokas"];
 
 app.get("/", (req, res) => {
   res.send(names);
